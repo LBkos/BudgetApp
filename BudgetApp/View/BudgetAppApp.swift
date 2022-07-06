@@ -10,10 +10,11 @@ import SwiftUI
 @main
 struct BudgetAppApp: App {
     let persistenceController = PersistenceController.shared
-
+    @StateObject var vm = BudgetViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            BudgetView()
+                .environmentObject(vm)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

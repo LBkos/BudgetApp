@@ -7,22 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B57A95CE287586D0002CFF1D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B57A95D0287586D0002CFF1D /* Localizable.strings */; };
 		B5E98E2228744462001375DA /* BudgetAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E98E2128744462001375DA /* BudgetAppApp.swift */; };
-		B5E98E2428744462001375DA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E98E2328744462001375DA /* ContentView.swift */; };
 		B5E98E2628744463001375DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5E98E2528744463001375DA /* Assets.xcassets */; };
 		B5E98E2928744463001375DA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5E98E2828744463001375DA /* Preview Assets.xcassets */; };
 		B5E98E2B28744463001375DA /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E98E2A28744463001375DA /* Persistence.swift */; };
 		B5E98E2E28744463001375DA /* BudgetApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5E98E2C28744463001375DA /* BudgetApp.xcdatamodeld */; };
+		B5E98E35287446C7001375DA /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E98E34287446C7001375DA /* ViewModel.swift */; };
+		B5E98E372874488C001375DA /* BudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E98E362874488C001375DA /* BudgetView.swift */; };
+		B5E98E3928744F23001375DA /* CreateNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E98E3828744F23001375DA /* CreateNewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B57A95CF287586D0002CFF1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B57A95D1287586D4002CFF1D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B5E98E1E28744462001375DA /* BudgetApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E98E2128744462001375DA /* BudgetAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetAppApp.swift; sourceTree = "<group>"; };
-		B5E98E2328744462001375DA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B5E98E2528744463001375DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5E98E2828744463001375DA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B5E98E2A28744463001375DA /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		B5E98E2D28744463001375DA /* BudgetApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BudgetApp.xcdatamodel; sourceTree = "<group>"; };
+		B5E98E34287446C7001375DA /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		B5E98E362874488C001375DA /* BudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetView.swift; sourceTree = "<group>"; };
+		B5E98E3828744F23001375DA /* CreateNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +43,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B57A95D228758AEB002CFF1D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B5E98E2128744462001375DA /* BudgetAppApp.swift */,
+				B5E98E362874488C001375DA /* BudgetView.swift */,
+				B5E98E3828744F23001375DA /* CreateNewView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B57A95D328758AFA002CFF1D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B5E98E34287446C7001375DA /* ViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B57A95D428758B1C002CFF1D /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				B5E98E2C28744463001375DA /* BudgetApp.xcdatamodeld */,
+				B5E98E2A28744463001375DA /* Persistence.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		B5E98E1528744462001375DA = {
 			isa = PBXGroup;
 			children = (
@@ -55,11 +89,11 @@
 		B5E98E2028744462001375DA /* BudgetApp */ = {
 			isa = PBXGroup;
 			children = (
-				B5E98E2128744462001375DA /* BudgetAppApp.swift */,
-				B5E98E2328744462001375DA /* ContentView.swift */,
+				B57A95D228758AEB002CFF1D /* View */,
+				B57A95D328758AFA002CFF1D /* ViewModel */,
 				B5E98E2528744463001375DA /* Assets.xcassets */,
-				B5E98E2A28744463001375DA /* Persistence.swift */,
-				B5E98E2C28744463001375DA /* BudgetApp.xcdatamodeld */,
+				B57A95D0287586D0002CFF1D /* Localizable.strings */,
+				B57A95D428758B1C002CFF1D /* CoreData */,
 				B5E98E2728744463001375DA /* Preview Content */,
 			);
 			path = BudgetApp;
@@ -115,6 +149,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = B5E98E1528744462001375DA;
 			productRefGroup = B5E98E1F28744462001375DA /* Products */;
@@ -132,6 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5E98E2928744463001375DA /* Preview Assets.xcassets in Resources */,
+				B57A95CE287586D0002CFF1D /* Localizable.strings in Resources */,
 				B5E98E2628744463001375DA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -143,14 +179,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5E98E35287446C7001375DA /* ViewModel.swift in Sources */,
+				B5E98E3928744F23001375DA /* CreateNewView.swift in Sources */,
+				B5E98E372874488C001375DA /* BudgetView.swift in Sources */,
 				B5E98E2B28744463001375DA /* Persistence.swift in Sources */,
-				B5E98E2428744462001375DA /* ContentView.swift in Sources */,
 				B5E98E2E28744463001375DA /* BudgetApp.xcdatamodeld in Sources */,
 				B5E98E2228744462001375DA /* BudgetAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B57A95D0287586D0002CFF1D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B57A95CF287586D0002CFF1D /* en */,
+				B57A95D1287586D4002CFF1D /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		B5E98E2F28744463001375DA /* Debug */ = {
@@ -203,7 +253,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -257,7 +307,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -273,7 +323,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 143;
 				DEVELOPMENT_ASSET_PATHS = "\"BudgetApp/Preview Content\"";
 				DEVELOPMENT_TEAM = T8AP55T38C;
 				ENABLE_PREVIEWS = YES;
@@ -302,7 +352,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 143;
 				DEVELOPMENT_ASSET_PATHS = "\"BudgetApp/Preview Content\"";
 				DEVELOPMENT_TEAM = T8AP55T38C;
 				ENABLE_PREVIEWS = YES;

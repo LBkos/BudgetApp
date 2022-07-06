@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  BudgetApp
+
+  Created by Константин Лопаткин on 06.07.2022.
+  
+*/
+"No Budget" = "No Budget";
+"All" = "All";
+"Income" = "Income";
+"Add new" = "Add new";
+"Spend" = "Spend";
+"Enter amount" = "Enter amount";
