@@ -21,7 +21,8 @@ struct CreateNewView: View {
                 ZStack {
                     TextField("0.0 ₽", text: $vm.newSum)
                         .foregroundColor(.clear)
-                        .keyboardType(.numberPad)
+                        .keyboardType(.decimalPad)
+                        
                         .multilineTextAlignment(.center)
                         .focused($focus, equals: .newSum)
                         .frame(height: 44)

@@ -7,29 +7,64 @@
 
 import Foundation
 import CoreData
-
+import Combine
 
 class BudgetViewModel: ObservableObject {
+        
+    @Published var budgets: [Budget] = []
+    @Published var selected: Int = 1
+    @Published var newSum = "" 
+    @Published var selectType: Int = 1
+    var persistence = PersistenceController.shared
+    private var store: Set<AnyCancellable> = []
     
     let formatter: NumberFormatter = {
        let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.currencySymbol = "₽"
+//        formatter.currencyDecimalSeparator = "/"
+        formatter.currencySymbol = Locale.current.currencySymbol ?? "₽"
         formatter.usesGroupingSeparator = true
         formatter.groupingSeparator = " "
         formatter.groupingSize = 3
         return formatter
     }()
     
+    func removeLast(value: String, index: String.Index) -> String {
+        if value.distance(from: index, to: value.endIndex) > 3 {
+            return String(value.dropLast())
+        } else {
+            return value
+        }
+    }
     
-    @Published var budgets: [Budget] = []
-    @Published var selected: Int = 1
-    @Published var newSum = "" 
-    @Published var selectType: Int = 1
-    var persistence = PersistenceController.shared
+    var textInTextFieldPublisher: AnyPublisher<String, Never> {
+        $newSum
+            .debounce(for: 0.2, scheduler: RunLoop.main)
+            .removeDuplicates()
+            .map { value in
+                var sum = value
+                if let index = value.lastIndex(of: ",") {
+                    sum = self.removeLast(value: value, index: index)
+                    
+                } else if let index = value.lastIndex(of: ".") {
+                    sum = self.removeLast(value: value, index: index)
+                }
+                let filteredValue = sum.filter { "1234567890.,".contains($0) }
+                
+                if sum != filteredValue {
+                    sum = filteredValue
+                }
+                return sum
+            }
+            .eraseToAnyPublisher()
+    }
     
     init() {
         fetchData()
+        textInTextFieldPublisher
+            .receive(on: RunLoop.main)
+            .assign(to: \.newSum, on: self)
+            .store(in: &store)
     }
     
     func fetchData() {
@@ -49,7 +84,6 @@ class BudgetViewModel: ObservableObject {
             } else {
                 sum -= Double(budget.sum ?? "") ?? 0
             }
-            
         }
         return formatter.string(from: NSNumber(value: sum)) ?? "Budget"
     }
@@ -57,7 +91,7 @@ class BudgetViewModel: ObservableObject {
     func addNew() {
         let newBudget = Budget(context: persistence.container.viewContext)
         newBudget.id = UUID()
-        newBudget.sum = newSum
+        newBudget.sum = newSum.replacingOccurrences(of: ",", with: ".")
         newBudget.type = selectType == 1 ? "spend" : "income"
         persistence.save()
         newSum.removeAll()
@@ -83,6 +117,7 @@ class BudgetViewModel: ObservableObject {
         persistence.container.viewContext.delete(entity)
         saveData()
     }
+ 
     func saveData() {
         do {
             try persistence.container.viewContext.save()
@@ -91,5 +126,4 @@ class BudgetViewModel: ObservableObject {
             print(error)
         }
     }
-    
 }

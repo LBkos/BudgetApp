@@ -43,6 +43,7 @@ struct BudgetView: View {
                     CreateNewView()
                 }
                 .buttonStyle(BudgetButtonStyle())
+                .padding(.bottom)
             }
             .navigationTitle(Text(vm.allSum()))
             .navigationBarTitleDisplayMode(.inline)
