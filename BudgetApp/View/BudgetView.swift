@@ -8,18 +8,17 @@
 import SwiftUI
 
 struct BudgetView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var vm: BudgetViewModel
+    @State var isDragging = false
+    @State var showAdd = false
+    init() {
+        UITableView.appearance().sectionHeaderHeight = 0
+        UITableView.appearance().sectionFooterHeight = 8
+    }
     var body: some View {
         NavigationView {
             VStack {
-                Picker(selection: $vm.selected, label: Text("Picker")) {
-                    Text("All").tag(1)
-                    Text("Spends").tag(2)
-                    Text("Income").tag(3)
-                    
-                }
-                .pickerStyle(.segmented)
-                .padding()
                 if vm.budgets.isEmpty {
                     Spacer()
                     Text("No Budget")
@@ -27,24 +26,42 @@ struct BudgetView: View {
                     Spacer()
                 } else {
                     List {
-                        ForEach(vm.filteredBudget()) { item in
-                            HStack {
-                                Text(vm.formatter.string(from: NSNumber(value: Double(item.sum ?? "") ?? 0.0)) ?? "")
-                                     Spacer()
-                                Image(systemName: item.type == "income" ? "plus.circle.fill" : "minus.circle.fill")
-                                    .foregroundColor(item.type == "income" ? .green : .red)
+                        Section {
+                            Picker(selection: $vm.selected, label: Text("Picker")) {
+                                Text("All").tag(1)
+                                Text("Spends").tag(2)
+                                Text("Income").tag(3)
                             }
+                            .pickerStyle(.segmented)
                         }
-                        .onDelete(perform: vm.delete)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                        
+                        Section {
+                            ForEach(vm.filteredBudget()) { item in
+                                HStack {
+                                    Text(vm.formatter.string(from: NSNumber(value: Double(item.sum ?? "") ?? 0.0)) ?? "")
+                                         Spacer()
+                                    Image(systemName: item.type == "income" ? "plus.circle.fill" : "minus.circle.fill")
+                                        .foregroundColor(item.type == "income" ? .green : .red)
+                                }
+                            }
+                            .onDelete(perform: vm.delete)
+                        }
                     }
-                    
+                    .listStyle(.insetGrouped)
+                    .padding(.top, -25)
                 }
-                NavigationLink("Add new") {
-                    CreateNewView()
+                Button("Add new") {
+                    showAdd.toggle()
                 }
                 .buttonStyle(BudgetButtonStyle())
                 .padding(.bottom)
+                .sheet(isPresented: $showAdd) {
+                    CreateNewView()
+                }
             }
+            .background(Color.clear)
             .navigationTitle(Text(vm.allSum()))
             .navigationBarTitleDisplayMode(.inline)
         }

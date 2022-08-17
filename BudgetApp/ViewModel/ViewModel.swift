@@ -10,7 +10,8 @@ import CoreData
 import Combine
 
 class BudgetViewModel: ObservableObject {
-        
+    
+    static let shared = BudgetViewModel()
     @Published var budgets: [Budget] = []
     @Published var selected: Int = 1
     @Published var newSum = "" 
@@ -101,19 +102,19 @@ class BudgetViewModel: ObservableObject {
     func filteredBudget() -> [Budget] {
         switch selected {
         case 1:
-            return budgets
+            return budgets.reversed()
         case 2:
-            return budgets.filter { $0.type == "spend" }
+            return budgets.filter { $0.type == "spend" }.reversed()
         case 3:
-            return budgets.filter { $0.type == "income" }
+            return budgets.filter { $0.type == "income" }.reversed()
         default:
-            return budgets
+            return budgets.reversed()
         }
     }
     
     func delete(indexSet: IndexSet) {
         guard let index = indexSet.first else { return }
-        let entity = budgets[index]
+        let entity = filteredBudget()[index]
         persistence.container.viewContext.delete(entity)
         saveData()
     }

@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  BudgetApp
+
+  Created by Константин Лопаткин on 19.07.2022.
+  
+*/
+"CFBundleDisplayName" = "Budget";

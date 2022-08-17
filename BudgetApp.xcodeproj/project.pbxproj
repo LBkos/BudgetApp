@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B57A95CE287586D0002CFF1D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B57A95D0287586D0002CFF1D /* Localizable.strings */; };
+		B5A4D825288670AF00DCD48A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5A4D827288670AF00DCD48A /* InfoPlist.strings */; };
 		B5E98E2228744462001375DA /* BudgetAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E98E2128744462001375DA /* BudgetAppApp.swift */; };
 		B5E98E2628744463001375DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5E98E2528744463001375DA /* Assets.xcassets */; };
 		B5E98E2928744463001375DA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5E98E2828744463001375DA /* Preview Assets.xcassets */; };
@@ -21,7 +22,9 @@
 /* Begin PBXFileReference section */
 		B57A95CF287586D0002CFF1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B57A95D1287586D4002CFF1D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B5E98E1E28744462001375DA /* BudgetApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5A4D826288670AF00DCD48A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B5A4D828288670B400DCD48A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B5E98E1E28744462001375DA /* Budget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E98E2128744462001375DA /* BudgetAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetAppApp.swift; sourceTree = "<group>"; };
 		B5E98E2528744463001375DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5E98E2828744463001375DA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -81,7 +84,7 @@
 		B5E98E1F28744462001375DA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B5E98E1E28744462001375DA /* BudgetApp.app */,
+				B5E98E1E28744462001375DA /* Budget.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,6 +95,7 @@
 				B57A95D228758AEB002CFF1D /* View */,
 				B57A95D328758AFA002CFF1D /* ViewModel */,
 				B5E98E2528744463001375DA /* Assets.xcassets */,
+				B5A4D827288670AF00DCD48A /* InfoPlist.strings */,
 				B57A95D0287586D0002CFF1D /* Localizable.strings */,
 				B57A95D428758B1C002CFF1D /* CoreData */,
 				B5E98E2728744463001375DA /* Preview Content */,
@@ -124,7 +128,7 @@
 			);
 			name = BudgetApp;
 			productName = BudgetApp;
-			productReference = B5E98E1E28744462001375DA /* BudgetApp.app */;
+			productReference = B5E98E1E28744462001375DA /* Budget.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -167,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5E98E2928744463001375DA /* Preview Assets.xcassets in Resources */,
+				B5A4D825288670AF00DCD48A /* InfoPlist.strings in Resources */,
 				B57A95CE287586D0002CFF1D /* Localizable.strings in Resources */,
 				B5E98E2628744463001375DA /* Assets.xcassets in Resources */,
 			);
@@ -198,6 +203,15 @@
 				B57A95D1287586D4002CFF1D /* ru */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		B5A4D827288670AF00DCD48A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5A4D826288670AF00DCD48A /* en */,
+				B5A4D828288670B400DCD48A /* ru */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -323,7 +337,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 143;
+				CURRENT_PROJECT_VERSION = 234;
 				DEVELOPMENT_ASSET_PATHS = "\"BudgetApp/Preview Content\"";
 				DEVELOPMENT_TEAM = T8AP55T38C;
 				ENABLE_PREVIEWS = YES;
@@ -337,9 +351,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "Konstantin-Lopatkin.BudgetApp";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Budget;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -352,7 +366,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 143;
+				CURRENT_PROJECT_VERSION = 234;
 				DEVELOPMENT_ASSET_PATHS = "\"BudgetApp/Preview Content\"";
 				DEVELOPMENT_TEAM = T8AP55T38C;
 				ENABLE_PREVIEWS = YES;
@@ -366,9 +380,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "Konstantin-Lopatkin.BudgetApp";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Budget;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

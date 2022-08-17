@@ -8,64 +8,76 @@
 import SwiftUI
 
 struct CreateNewView: View {
-    enum FocusField {
-        case newSum
-    }
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var vm: BudgetViewModel
-    @FocusState private var focus: FocusField?
+    
     var body: some View {
-        VStack {
-            Spacer()
-            ZStack(alignment: .trailing) {
-                ZStack {
-                    TextField("0.0 ₽", text: $vm.newSum)
-                        .foregroundColor(.clear)
-                        .keyboardType(.decimalPad)
-                        
-                        .multilineTextAlignment(.center)
-                        .focused($focus, equals: .newSum)
-                        .frame(height: 44)
-                        .background(Color.white)
-                        .cornerRadius(8)
-                    Text(vm.newSum)
+        NavigationView {
+            VStack {
+                Spacer()
+                ZStack(alignment: .trailing) {
+                    ZStack {
+                        TextField("0.0 ₽", text: $vm.newSum)
+                            .foregroundColor(.clear)
+                            .keyboardType(.decimalPad)
+                            
+                            .multilineTextAlignment(.center)
+                            .frame(height: 44)
+                            .background(colorScheme == .dark ? Color.black : .white)
+                            .cornerRadius(8)
+                        Text(vm.newSum)
+                    }
+                    if !vm.newSum.isEmpty {
+                        Button {
+                            vm.newSum.removeAll()
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.trailing)
+                    }
                 }
-                        
-                        
-                        
-
-//                        .background(Color.white)
+                .padding(.horizontal)
+                Spacer()
+                Picker("", selection: $vm.selectType) {
+                    Text("Spend").tag(1)
+                    Text("Income").tag(2)
+                }
+                .pickerStyle(.segmented)
+                .padding(.bottom, 16)
+                .padding(.horizontal)
                 Button {
-                    vm.newSum.removeAll()
+                    vm.addNew()
+                    dismiss()
                 } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.gray)
+                    Text("Add new")
+                        .foregroundColor(vm.newSum.isEmpty ? .gray : .white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                        .background(
+                            vm.newSum.isEmpty ? Color.gray.opacity(0.5) : .blue
+                        )
+                        .cornerRadius(8)
+                        .padding(.horizontal)
                 }
-                .padding(.trailing)
+                .disabled(vm.newSum.isEmpty)
+                .padding(.bottom, 16)
             }
-            .padding(.horizontal)
-            Spacer()
-            Picker("", selection: $vm.selectType) {
-                Text("Spend").tag(1)
-                Text("Income").tag(2)
-            }
-            .pickerStyle(.segmented)
-            .padding(.bottom, 16)
-            .padding(.horizontal)
-            Button {
-                vm.addNew()
-                dismiss()
-            } label: {
-                Text("Add new")
-            }
-            .buttonStyle(BudgetButtonStyle())
-            .padding(.bottom, 16)
-        }
-        .background(Color.gray.opacity(0.2))
-        .onAppear {
-            focus = .newSum
-        }
+            .background(Color(UIColor.systemGray6))
         .navigationTitle("Enter amount")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                    Text("Back")
+                }
+            }
+        }
+        }
     }
 }
 
