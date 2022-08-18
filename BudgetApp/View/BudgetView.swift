@@ -27,7 +27,7 @@ struct BudgetView: View {
                 } else {
                     List {
                         ForEach(vm.filterDateBudget()) { element in
-                            Section(header: Text(element.title)) {
+                            Section(vm.createTitle(element.title)) {
                                 inSection(budgets: element.budgetList)
                             }
                         }
@@ -90,13 +90,17 @@ struct BudgetView: View {
     func inSection(budgets: [Budget]) -> some View {
         ForEach(budgets) { item in
             HStack {
-                Text(vm.formatter.string(from: NSNumber(value: Double(item.sum ?? "") ?? 0.0)) ?? "")
-                     Spacer()
                 Image(systemName: item.type == "income" ? "plus.circle.fill" : "minus.circle.fill")
                     .foregroundColor(item.type == "income" ? .green : .orange)
+                Text(vm.formatter.string(from: NSNumber(value: Double(item.sum ?? "") ?? 0.0)) ?? "")
+                     Spacer()
+                Text(item.name ?? "")
+                    .foregroundColor(.gray.opacity(0.7))
             }
         }
-        .onDelete(perform: vm.delete)
+        .onDelete { indexSet in
+            vm.delete(indexSet: indexSet, array: budgets)
+        }
     }
 }
 

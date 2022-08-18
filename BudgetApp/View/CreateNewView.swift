@@ -11,6 +11,10 @@ struct CreateNewView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var vm: BudgetViewModel
+    init() {
+        UITableView.appearance().sectionHeaderHeight = 8
+        UITableView.appearance().sectionFooterHeight = 8
+    }
     
     var body: some View {
         NavigationView {
@@ -36,14 +40,17 @@ struct CreateNewView: View {
                                     Image(systemName: "xmark.circle.fill")
                                         .foregroundColor(.gray)
                                 }
-                                .padding(.trailing)
+                                
                             }
                         }
-                        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                        .listRowInsets(EdgeInsets())
+                        .padding(.horizontal)
                     }
                     Section {
                         TextField("Payment name", text: $vm.name)
                         DatePicker("Date", selection: $vm.createAt)
+                            .datePickerStyle(.compact)
+                            
                     }
                 }
                 .buttonStyle(.borderless)

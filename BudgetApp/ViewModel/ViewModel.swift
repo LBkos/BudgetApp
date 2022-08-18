@@ -14,7 +14,7 @@ class BudgetViewModel: ObservableObject {
     
     static let dateFormat: DateFormatter = {
        let format = DateFormatter()
-        format.dateFormat = "dd.MMMM.YYYY"
+        format.dateFormat = "dd MMMM YYYY"
         return format
     }()
     static let shared = BudgetViewModel()
@@ -86,28 +86,40 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
+    func createTitle(_ title: String) -> String {
+        if title == Self.dateFormat.string(from: .now) {
+            return NSLocalizedString("Today", comment: "")
+        } else if title == Self.dateFormat.string(from: .now - 84600) {
+            return NSLocalizedString("Yesterday", comment: "")
+        } else {
+            return title
+        }
+    }
+    
     func filterDateBudget() -> [FileredDate] {
         var filteredDate: [FileredDate] = []
-        for budget in budgets {
+        for budget in filteredBudget() {
             let title = Self.dateFormat.string(from: budget.createAt ?? Date())
             let element = FileredDate(title: title,
-                                   budgetList: filteredBudget().filter({ ($0.createAt ?? Date()) == (budget.createAt ?? Date())}))
-            filteredDate.append(element)
-
+                                      budgetList: filteredBudget().filter({ Self.dateFormat.string(from: ($0.createAt ?? Date())) == title }))
+            if !filteredDate.contains(where: {$0.title == title }) {
+                filteredDate.append(element)
+            }
         }
+        filteredDate = filteredDate.sorted { $0.title > $1.title }
         return filteredDate
     }
     
     func subTitle() -> String {
         switch selected {
         case 1:
-            return "All"
+            return NSLocalizedString("All", comment: "")
         case 2:
-            return "Expense"
+            return NSLocalizedString("Expense", comment: "")
         case 3:
-            return "Income"
+            return NSLocalizedString("Income", comment: "")
         default:
-            return "All"
+            return NSLocalizedString("All", comment: "")
         }
     }
 
@@ -148,9 +160,9 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
-    func delete(indexSet: IndexSet) {
+    func delete(indexSet: IndexSet, array: [Budget]) {
         guard let index = indexSet.first else { return }
-        let entity = filteredBudget()[index]
+        let entity = array[index]
         persistence.container.viewContext.delete(entity)
         saveData()
     }

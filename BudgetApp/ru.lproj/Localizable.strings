@@ -13,5 +13,9 @@
 "Spends" = "Расходы";
 "Back" = "Назад";
 "Spend" = "Расход";
+"Expense" = "Расход";
 "Enter amount" = "Введите сумму";
-
+"Today" = "Сегодня";
+"Yesterday" = "Вчера";
+"Date" = "Дата";
+"Payment name" = "Название платежа";
