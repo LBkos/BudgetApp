@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B568459E28AD596800ED06D8 /* BudgetTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B568459D28AD596800ED06D8 /* BudgetTabView.swift */; };
+		B56845A028AD5A9400ED06D8 /* PageControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B568459F28AD5A9400ED06D8 /* PageControlView.swift */; };
 		B57A95CE287586D0002CFF1D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B57A95D0287586D0002CFF1D /* Localizable.strings */; };
 		B5A4D825288670AF00DCD48A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5A4D827288670AF00DCD48A /* InfoPlist.strings */; };
 		B5E98E2228744462001375DA /* BudgetAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E98E2128744462001375DA /* BudgetAppApp.swift */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B568459D28AD596800ED06D8 /* BudgetTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTabView.swift; sourceTree = "<group>"; };
+		B568459F28AD5A9400ED06D8 /* PageControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlView.swift; sourceTree = "<group>"; };
 		B57A95CF287586D0002CFF1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B57A95D1287586D4002CFF1D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B5A4D826288670AF00DCD48A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -50,7 +54,9 @@
 			isa = PBXGroup;
 			children = (
 				B5E98E2128744462001375DA /* BudgetAppApp.swift */,
+				B568459D28AD596800ED06D8 /* BudgetTabView.swift */,
 				B5E98E362874488C001375DA /* BudgetView.swift */,
+				B568459F28AD5A9400ED06D8 /* PageControlView.swift */,
 				B5E98E3828744F23001375DA /* CreateNewView.swift */,
 			);
 			path = View;
@@ -184,6 +190,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B568459E28AD596800ED06D8 /* BudgetTabView.swift in Sources */,
+				B56845A028AD5A9400ED06D8 /* PageControlView.swift in Sources */,
 				B5E98E35287446C7001375DA /* ViewModel.swift in Sources */,
 				B5E98E3928744F23001375DA /* CreateNewView.swift in Sources */,
 				B5E98E372874488C001375DA /* BudgetView.swift in Sources */,

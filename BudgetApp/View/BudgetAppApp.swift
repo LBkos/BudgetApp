@@ -13,9 +13,13 @@ struct BudgetAppApp: App {
     @StateObject var vm = BudgetViewModel.shared
     var body: some Scene {
         WindowGroup {
-            BudgetView()
+            BudgetTabView()
                 .environmentObject(vm)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+//            .tabViewStyle(.page)
+//            .indexViewStyle(.page(backgroundDisplayMode: .interactive))
+            
         }
     }
 }
+

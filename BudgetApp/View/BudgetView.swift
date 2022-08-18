@@ -26,32 +26,19 @@ struct BudgetView: View {
                     Spacer()
                 } else {
                     List {
-                        Section {
-                            Picker(selection: $vm.selected, label: Text("Picker")) {
-                                Text("All").tag(1)
-                                Text("Spends").tag(2)
-                                Text("Income").tag(3)
+                        ForEach(vm.filterDateBudget()) { element in
+                            Section(header: Text(element.title)) {
+                                inSection(budgets: element.budgetList)
                             }
-                            .pickerStyle(.segmented)
                         }
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(EdgeInsets())
-                        
-                        Section {
-                            ForEach(vm.filteredBudget()) { item in
-                                HStack {
-                                    Text(vm.formatter.string(from: NSNumber(value: Double(item.sum ?? "") ?? 0.0)) ?? "")
-                                         Spacer()
-                                    Image(systemName: item.type == "income" ? "plus.circle.fill" : "minus.circle.fill")
-                                        .foregroundColor(item.type == "income" ? .green : .red)
-                                }
-                            }
-                            .onDelete(perform: vm.delete)
-                        }
+                        .listStyle(.insetGrouped)
                     }
-                    .listStyle(.insetGrouped)
-                    .padding(.top, -25)
+                    
+                    
+                    //                    .padding(.top, -25)
                 }
+                PageControlView()
+                    .padding(.bottom)
                 Button("Add new") {
                     showAdd.toggle()
                 }
@@ -61,11 +48,55 @@ struct BudgetView: View {
                     CreateNewView()
                 }
             }
-            .background(Color.clear)
+            .onTapGesture{}
+            .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                                .onEnded({ value in
+                                    if value.translation.width < 0 {
+                                        // left
+                                        if vm.selected < 3 {
+                                            vm.selected += 1
+                                        } else {
+                                            vm.selected = 1
+                                        }
+                                    }
+
+                                    if value.translation.width > 0 {
+                                        // right
+                                        if vm.selected > 1 {
+                                            vm.selected -= 1
+                                        } else {
+                                            vm.selected = 3
+                                        }
+                                    }
+                                    if value.translation.height < 0 {
+                                        // up
+                                    }
+
+                                    if value.translation.height > 0 {
+                                        // down
+                                    }
+                                }))
             .navigationTitle(Text(vm.allSum()))
-            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Text(vm.subTitle())
+                }
+            }
+            .background(Color.background)
         }
-        
+        .navigationViewStyle(.stack)
+    }
+    
+    func inSection(budgets: [Budget]) -> some View {
+        ForEach(budgets) { item in
+            HStack {
+                Text(vm.formatter.string(from: NSNumber(value: Double(item.sum ?? "") ?? 0.0)) ?? "")
+                     Spacer()
+                Image(systemName: item.type == "income" ? "plus.circle.fill" : "minus.circle.fill")
+                    .foregroundColor(item.type == "income" ? .green : .orange)
+            }
+        }
+        .onDelete(perform: vm.delete)
     }
 }
 

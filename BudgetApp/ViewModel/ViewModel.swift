@@ -8,14 +8,23 @@
 import Foundation
 import CoreData
 import Combine
+import SwiftUI
 
 class BudgetViewModel: ObservableObject {
     
+    static let dateFormat: DateFormatter = {
+       let format = DateFormatter()
+        format.dateFormat = "dd.MMMM.YYYY"
+        return format
+    }()
     static let shared = BudgetViewModel()
     @Published var budgets: [Budget] = []
     @Published var selected: Int = 1
     @Published var newSum = "" 
     @Published var selectType: Int = 1
+    //new fields
+    @Published var name = ""
+    @Published var createAt = Date()
     var persistence = PersistenceController.shared
     private var store: Set<AnyCancellable> = []
     
@@ -77,6 +86,31 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
+    func filterDateBudget() -> [FileredDate] {
+        var filteredDate: [FileredDate] = []
+        for budget in budgets {
+            let title = Self.dateFormat.string(from: budget.createAt ?? Date())
+            let element = FileredDate(title: title,
+                                   budgetList: filteredBudget().filter({ ($0.createAt ?? Date()) == (budget.createAt ?? Date())}))
+            filteredDate.append(element)
+
+        }
+        return filteredDate
+    }
+    
+    func subTitle() -> String {
+        switch selected {
+        case 1:
+            return "All"
+        case 2:
+            return "Expense"
+        case 3:
+            return "Income"
+        default:
+            return "All"
+        }
+    }
+
     func allSum() -> String {
         var sum = 0.0
         for budget in filteredBudget() {
@@ -92,6 +126,8 @@ class BudgetViewModel: ObservableObject {
     func addNew() {
         let newBudget = Budget(context: persistence.container.viewContext)
         newBudget.id = UUID()
+        newBudget.name = name
+        newBudget.createAt = createAt
         newBudget.sum = newSum.replacingOccurrences(of: ",", with: ".")
         newBudget.type = selectType == 1 ? "spend" : "income"
         persistence.save()
@@ -127,4 +163,15 @@ class BudgetViewModel: ObservableObject {
             print(error)
         }
     }
+}
+
+
+extension Color {
+    static let background = Color("background")
+}
+
+struct FileredDate: Identifiable, Hashable {
+    let id = UUID().uuidString
+    let title: String
+    let budgetList: [Budget]
 }
