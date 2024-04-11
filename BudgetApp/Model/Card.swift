@@ -15,35 +15,31 @@ class Card {
     var name: String
     var theme: Theme
     var currency: String
-    var transactions: [Transaction]
-    var sum: String {
-        let formatter = Formatters.currencyFormatter
-        formatter.currencyCode = currency
-        var sum = 0.0
-        for transaction in transactions {
-            sum += transaction.amount
-        }
-        return formatter.string(from: NSNumber(value: sum)) ?? "0"
-    }
+    @Relationship(deleteRule: .cascade, inverse: \CardTransaction.card)
+    var transactions: [CardTransaction]
+    var sum: Double
+    var spend: Double
     
-    init(name: String, theme: Theme, currency: String, transactions: [Transaction]) {
+    init(name: String = "", theme: Theme = .bubblegum, currency: String = "", transactions: [CardTransaction] = [], sum: Double = 0, spend: Double = 0) {
         self.name = name
         self.theme = theme
         self.currency = currency
         self.transactions = transactions
+        self.sum = sum
+        self.spend = spend
     }
 }
 
 
 @Model
-class Transaction {
+class CardTransaction {
     var amount: Double
     var comment: String
     var date: Date
-    var category: Category
-    var card: Card
+    var category: CardCategory
+    var card: Card?
 
-    init(amount: Double, comment: String, date: Date, category: Category, card: Card) {
+    init(amount: Double = 0.0, comment: String = "", date: Date = .now, category: CardCategory = .init(), card: Card? = .init()) {
         self.amount = amount
         self.comment = comment
         self.date = date
@@ -53,12 +49,12 @@ class Transaction {
 }
 
 @Model
-class Category {
+class CardCategory {
     var name: String
     var image: String
     var theme: Theme
     
-    init(name: String, image: String, theme: Theme) {
+    init(name: String = "", image: String = "", theme: Theme = .indigo) {
         self.name = name
         self.image = image
         self.theme = theme

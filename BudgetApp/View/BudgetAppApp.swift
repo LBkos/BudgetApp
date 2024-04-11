@@ -6,20 +6,30 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct BudgetAppApp: App {
     let persistenceController = PersistenceController.shared
-    @StateObject var vm = BudgetViewModel.shared
+    @Environment(\.modelContext) private var context
+    
+    let modelContainer: ModelContainer
+    
+    init() {
+        do {
+            modelContainer = try ModelContainer(for: Card.self)
+        } catch {
+            fatalError("Could not initialize ModelContainer")
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
-            BudgetTabView()
-                .environmentObject(vm)
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-//            .tabViewStyle(.page)
-//            .indexViewStyle(.page(backgroundDisplayMode: .interactive))
-            
+            WalletView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)            
         }
+        .modelContainer(modelContainer)
+        .modelContext(context)
     }
 }
 

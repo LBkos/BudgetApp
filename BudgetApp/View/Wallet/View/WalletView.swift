@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct WalletView: View {
+    @State var appState = AppState()
     @Query(sort: \Card.name) var cards: [Card]
     @Environment(\.modelContext) private var context
     @Environment(\.colorScheme) var colorScheme
@@ -20,20 +21,20 @@ struct WalletView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section {
-                    HStack(spacing: 16) {
-                        TabInWalletView(
-                            cards: cards,
-                            type: .balance
-                        )
-                        TabInWalletView(
-                            cards: cards,
-                            type: .spend
-                        )
-                    }
-                }
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets())
+//                Section {
+//                    HStack(spacing: 16) {
+//                        TabInWalletView(
+//                            cards: cards,
+//                            type: .balance
+//                        )
+//                        TabInWalletView(
+//                            cards: cards,
+//                            type: .spend
+//                        )
+//                    }
+//                }
+//                .listRowBackground(Color.clear)
+//                .listRowInsets(EdgeInsets())
                 
                 Section {
                     ForEach(cards) { card in
@@ -78,9 +79,15 @@ struct WalletView: View {
                     card: card,
                     scrolledID: card.id
                 )
+                .environment(appState)
             }
             .navigationTitle(Text("Wallet"))
+            .onAppear {
+                appState.selectedCard = nil
+            }
         }
+        .tint(appState.selectedCard?.theme.mainColor)
+        
     }
         
     

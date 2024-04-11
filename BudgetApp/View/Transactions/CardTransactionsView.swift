@@ -9,11 +9,13 @@ import SwiftUI
 import SwiftData
 
 struct CardTransactionsView: View {
+    @Environment(AppState.self) private var appState
     var cards: [Card]
     @State var card: Card = .init()
     @State var scrolledID: UUID?
     
     var body: some View {
+        @Bindable var appState = appState
         ZStack(alignment: .topTrailing) {
             backgroundView
             
@@ -48,6 +50,9 @@ struct CardTransactionsView: View {
                 }
             }
         }
+        .onAppear {
+            appState.selectedCard = card
+        }
     }
     
     var backgroundView: some View {
@@ -76,7 +81,8 @@ struct CardTransactionsView: View {
             card: card,
             scrolledID: card.id
         )
-        .modelContainer(DataController.previewContainer)
+        .modelContainer(DataController.previewContainerTransaction)
+        
     }
     
 }

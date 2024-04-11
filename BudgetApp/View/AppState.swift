@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
+
+@Observable
+class AppState {
+    var selectedCard: Card?
+}

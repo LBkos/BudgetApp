@@ -34,9 +34,8 @@ struct TabInWalletView: View {
                 .id(index)
             }
         }
+        .frame(minHeight: 67)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 14)
-        .padding(.vertical, 10)
         .background(.white)
         .clipShape(.rect(cornerRadius: 10))
         .tabViewStyle(.page(indexDisplayMode: .never))

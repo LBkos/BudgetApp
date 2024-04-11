@@ -8,47 +8,20 @@
 import SwiftUI
 import SwiftData
 
-@Observable
-class TransactionViewModel {
-    var amount = ""
-    var comment = ""
-    var date: Date = .now
-    var card: Card? = nil
-    var transaction: CardTransaction? = nil
-    
-    func addTransaction(context: ModelContext, dismiss: DismissAction) {
-        transaction = .init(
-            amount: Double(amount) ?? 0,
-            comment: comment,
-            date: date,
-            category: .init(),
-            card: card
-        )
-        if let transaction = transaction {
-            transaction.card?.sum += transaction.amount
-            context.insert(transaction)
-            transaction.card?.transactions.append(transaction)
-            dismiss()
-        } else {
-            print("Error")
-        }
-    }
-}
-
 struct CreateTransactionView: View {
     //    @Query(sort: \CardCategory.name) var categories: [CardCategory]
     @Query(sort: \Card.name) var cards: [Card]
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) var dismiss
     @State var vm = TransactionViewModel()
-    var type: TransactionType
+    
     
     var body: some View {
         NavigationStack {
             List {
                 Section {
                     TextField(
-                        "\(type.rawValue) amount",
+                        "\(vm.type.rawValue) amount",
                         text: $vm.amount
                     )
                 }
@@ -77,18 +50,21 @@ struct CreateTransactionView: View {
                                 vm.card = card
                             } label: {
                                 Text(card.name)
+                                Circle()
+                                    .fill(card.theme.mainColor)
                             }
                             
                         }
                     } label: {
                         menuLabel(
                             title: "Card",
-                            name: vm.card?.name ?? ""
+                            name: vm.card?.name ?? "",
+                            circleColor: vm.card?.theme.mainColor ?? .blue
                         )
                     }
                 }
             }
-            .navigationTitle(type.rawValue)
+            .navigationTitle(vm.type.rawValue)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -109,7 +85,8 @@ struct CreateTransactionView: View {
     func menuLabel(
         title: String,
         name: String,
-        image: String? = nil
+        image: String? = nil,
+        circleColor: Color = .primary
     ) -> some View {
         HStack(spacing: 9) {
             if let image = image {
@@ -127,6 +104,7 @@ struct CreateTransactionView: View {
             Spacer()
             
             Circle()
+                .fill(circleColor)
                 .frame(width: 15)
             Text(name)
                 .foregroundStyle(Color.secondary)
@@ -137,7 +115,8 @@ struct CreateTransactionView: View {
     }
     
     init(type: TransactionType = .spend) {
-        self.type = type
+        self.vm.type = type
+        self.vm.card = cards.first
     }
 }
 
@@ -146,7 +125,3 @@ struct CreateTransactionView: View {
         .modelContainer(DataController.previewContainer)
 }
 
-enum TransactionType: String {
-    case spend = "Spend"
-    case add = "Add"
-}

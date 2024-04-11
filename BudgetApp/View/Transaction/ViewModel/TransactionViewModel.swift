@@ -10,6 +10,7 @@ import SwiftData
 
 @Observable
 class TransactionViewModel {
+    var type: TransactionType = .spend
     var amount = ""
     var comment = ""
     var date: Date = .now
@@ -25,7 +26,14 @@ class TransactionViewModel {
             card: card
         )
         if let transaction = transaction {
-            transaction.card?.sum += transaction.amount
+            
+            if type == .spend {
+                transaction.card?.sum -= transaction.amount
+                transaction.card?.spend += transaction.amount
+            } else {
+                transaction.card?.sum += transaction.amount
+            }
+            
             context.insert(transaction)
             transaction.card?.transactions.append(transaction)
             dismiss()
@@ -37,5 +45,5 @@ class TransactionViewModel {
 
 enum TransactionType: String {
     case spend = "Spend"
-    case add = "Add"
+    case income = "Add"
 }
