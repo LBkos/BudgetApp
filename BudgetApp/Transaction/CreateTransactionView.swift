@@ -33,6 +33,20 @@ struct CreateTransactionView: View {
                 
                 Section {
                     Menu {
+                        ForEach(categories) { category in
+                            Button {
+                                cardTransaction.category = category
+                            } label: {
+                                Label(category.name, systemImage: category.image)
+                            }
+                        }
+                        Section {
+                            Button {
+                                isPresented.toggle()
+                            } label: {
+                                Text("Add Category")
+                            }
+                        }
                         
                     } label: {
                         menuLabel(
@@ -62,6 +76,9 @@ struct CreateTransactionView: View {
                             circleColor: vm.card?.theme.mainColor ?? .blue
                         )
                     }
+                }
+                .onAppear {
+                    self.vm.card = cards.first
                 }
             }
             .navigationTitle(vm.type.rawValue)
@@ -116,7 +133,6 @@ struct CreateTransactionView: View {
     
     init(type: TransactionType = .spend) {
         self.vm.type = type
-        self.vm.card = cards.first
     }
 }
 

@@ -21,21 +21,6 @@ struct WalletView: View {
     var body: some View {
         NavigationStack {
             List {
-//                Section {
-//                    HStack(spacing: 16) {
-//                        TabInWalletView(
-//                            cards: cards,
-//                            type: .balance
-//                        )
-//                        TabInWalletView(
-//                            cards: cards,
-//                            type: .spend
-//                        )
-//                    }
-//                }
-//                .listRowBackground(Color.clear)
-//                .listRowInsets(EdgeInsets())
-                
                 Section {
                     ForEach(cards) { card in
                         NavigationLink(value: card) {
@@ -61,7 +46,7 @@ struct WalletView: View {
                         isPresentedNewCard.toggle()
                     }
                     
-                    Button("Spend") { 
+                    Button("Spend") {
                         isPresentedSpend.toggle()
                     }
                 }
@@ -76,10 +61,12 @@ struct WalletView: View {
             .navigationDestination(for: Card.self) { card in
                 CardTransactionsView(
                     cards: cards,
-                    card: card,
                     scrolledID: card.id
                 )
                 .environment(appState)
+                .onAppear {
+                    appState.selectedCard = card
+                }
             }
             .navigationTitle(Text("Wallet"))
             .onAppear {
@@ -87,9 +74,7 @@ struct WalletView: View {
             }
         }
         .tint(appState.selectedCard?.theme.mainColor)
-        
     }
-        
     
     private func onDelete(at offsets: IndexSet) {
         for index in offsets {

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct HorizontalCardsView: View {
+    @Environment(AppState.self) var appState
     var cards: [Card]
-    @Binding var card: Card
     @State var scrolledID: UUID?
     
     var body: some View {
@@ -39,9 +39,8 @@ struct HorizontalCardsView: View {
         .listRowBackground(Color.clear)
         .onChange(of: scrolledID) { _, _ in
             withAnimation {
-                self.card = cards.first(where: { $0.id == scrolledID }) ?? Card.init()
+                self.appState.selectedCard = cards.first(where: { $0.id == scrolledID })
             }
-            
         }
     }
     
@@ -70,5 +69,5 @@ struct HorizontalCardsView: View {
 }
 
 #Preview {
-    HorizontalCardsView(cards: [], card: .constant(.init()))
+    HorizontalCardsView(cards: [])
 }

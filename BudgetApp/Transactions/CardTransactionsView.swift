@@ -9,11 +9,11 @@ import SwiftUI
 import SwiftData
 
 struct CardTransactionsView: View {
+    @Query(sort: \CardTransaction.amount) var transactions: [CardTransaction]
     @Environment(AppState.self) private var appState
     var cards: [Card]
-    @State var card: Card = .init()
     @State var scrolledID: UUID?
-    
+    @State var title: String = ""
     var body: some View {
         @Bindable var appState = appState
         ZStack(alignment: .topTrailing) {
@@ -23,13 +23,22 @@ struct CardTransactionsView: View {
                 Section {
                     HorizontalCardsView(
                         cards: cards,
-                        card: $card,
                         scrolledID: scrolledID
                     )
+                    .onAppear {
+                        title = ""
+                    }
+                    .onDisappear {
+                        if let sum = appState.selectedCard?.sum, sum != 0 {
+                            title = sum.formatted(.currency(code: appState.selectedCard?.currency ?? ""))
+                        } else {
+                            title = appState.selectedCard?.name ?? ""
+                        }
+                    }
                 }
                 
                 Section {
-                    TransactionsList(transactions: card.transactions)
+                    TransactionsList(transactions: appState.selectedCard?.transactions ?? [])
                         .listRowBackground(
                             Color.white 
                                 .opacity(0.7)
@@ -45,23 +54,21 @@ struct CardTransactionsView: View {
                     
                 } label: {
                     Image(systemName: "pencil")
-                        .foregroundStyle(card.theme.mainColor)
+                        .foregroundStyle(appState.selectedCard?.theme.mainColor ?? .accentColor)
                         .blendMode(.multiply)
                 }
             }
         }
-        .onAppear {
-            appState.selectedCard = card
-        }
+        .navigationTitle(title)
     }
     
     var backgroundView: some View {
         RadialGradient(
             gradient: .init(
                 colors: [
-                    card.theme.mainColor,
+                    appState.selectedCard?.theme.mainColor ?? .accentColor,
                     Color(
-                        .systemBackground
+                        .systemGroupedBackground
                     )
                 ]
             ),
@@ -74,14 +81,14 @@ struct CardTransactionsView: View {
 }
 
 #Preview {
-    let card: Card = .init(name: "Tinkoff", theme: .yellow, currency: "USD", transactions: [], sum: 2000)
+    let card: Card = .init(name: "Tinkoff", theme: .yellow, currency: "USD", transactions: [], sum: 2000, spend: 10)
     return NavigationStack {
         CardTransactionsView(
-            cards: [.init(), .init()],
-            card: card,
+            cards: [.init(name: "tinkoff", currency: "RUB", sum: 200), .init(name: "VTB")],
             scrolledID: card.id
         )
         .modelContainer(DataController.previewContainerTransaction)
+        .environment(AppState())
         
     }
     
